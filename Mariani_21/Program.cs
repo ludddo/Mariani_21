@@ -32,7 +32,7 @@ namespace Mariani_21
             do
             {
                 Console.Clear();
-                Console.WriteLine("Premere uno dei seguenti tasti per selezionare l'operazione desiderata: \n\t1 - Aggiungi elemento \n\t2 - Stampa elementi \n\t3 - Stampa stringa HTML \n\t4 - Ricerca elemento \n\t5 - Elimina elemento \n\t6 - Aggiungi elemento alla posizione desiderata \n\t7 - Aggiungimento N Valori compresi tra X e Y \n\t0 - Uscita");
+                Console.WriteLine("Premere uno dei seguenti tasti per selezionare l'operazione desiderata: \n\t1 - Aggiungi elemento \n\t2 - Stampa elementi \n\t3 - Stampa stringa HTML \n\t4 - Ricerca elemento \n\t5 - Elimina elemento \n\t6 - Aggiungi elemento alla posizione desiderata \n\t7 - Aggiungimento N Valori compresi tra X e Y \n\t8 - Troncamento di un Array \n\t0 - Uscita");
                 scelta = Convert.ToInt32(Console.ReadLine());
 
                 switch (scelta)
@@ -104,6 +104,11 @@ namespace Mariani_21
                         int y = Convert.ToInt32(Console.ReadLine());
                         Randomica(array, ref dim, b, x, y);
                         break;
+                    case 8:
+                        Console.WriteLine("Inserire fino a quanti Indirizzi Utilizzare:");
+                        int z = Convert.ToInt32(Console.ReadLine());
+                        Troncamento(ref dim, z);
+                        break;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -112,8 +117,16 @@ namespace Mariani_21
                 Thread.Sleep(1000);
             } while (scelta != 0);
         }
-        // Funzione Randomica
 
+
+        // Funzione Tronco 
+
+        static void Troncamento(ref int dim, int z)
+        {
+            dim = z;
+        }
+
+        // Funzione Randomica
         static void Randomica(int[] array, ref int dim, int b, int x, int y)
         {
             Random random = new Random();
