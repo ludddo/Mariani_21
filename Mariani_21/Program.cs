@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +32,7 @@ namespace Mariani_21
             do
             {
                 Console.Clear();
-                Console.WriteLine("Premere uno dei seguenti tasti per selezionare l'operazione desiderata: \n\t1 - Aggiungi elemento \n\t2 - Stampa elementi \n\t3 - Stampa stringa HTML \n\t4 - Ricerca elemento \n\t5 - Elimina elemento \n\t6 - Aggiungi elemento alla posizione desiderata \n\t0 - Uscita");
+                Console.WriteLine("Premere uno dei seguenti tasti per selezionare l'operazione desiderata: \n\t1 - Aggiungi elemento \n\t2 - Stampa elementi \n\t3 - Stampa stringa HTML \n\t4 - Ricerca elemento \n\t5 - Elimina elemento \n\t6 - Aggiungi elemento alla posizione desiderata \n\t7 - Aggiungimento N Valori compresi tra X e Y \n\t0 - Uscita");
                 scelta = Convert.ToInt32(Console.ReadLine());
 
                 switch (scelta)
@@ -95,6 +95,15 @@ namespace Mariani_21
                         else
                             Console.WriteLine("L'elemento non è stato inserito");
                         break;
+                    case 7:
+                        Console.WriteLine("Inserire quanti elementi aggiungere");
+                        b = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Inserisci il valore minimo aggiungibile:");
+                        int x = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Inserisci il valore massimo aggiungibile:");
+                        int y = Convert.ToInt32(Console.ReadLine());
+                        Randomica(array, ref dim, b, x, y);
+                        break;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -103,7 +112,21 @@ namespace Mariani_21
                 Thread.Sleep(1000);
             } while (scelta != 0);
         }
+        // Funzione Randomica
 
+        static void Randomica(int[] array, ref int dim, int b, int x, int y)
+        {
+            Random random = new Random();
+
+            int copiaDim = dim;
+            dim = dim + b;
+
+            for (int i = 0; i < b; i++)
+            {
+                copiaDim++;
+                array[copiaDim - 1] = random.Next(x, y+1);
+            }
+        }
         // Funzione Aggiunta
         static bool Aggiunta(int[] array, int a, ref int index)
         {
