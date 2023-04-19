@@ -116,6 +116,8 @@ void Magazzino()
 
     Magazzino << "farina:90\n";
     Magazzino << "zucchero:100\n";
+
+    Magazzino.close();
 }
 
 
@@ -127,8 +129,9 @@ void ControlloIngredientiPresenti()
 	int quantitaMagazzino, quantitaLista;
     bool trovato = false;
 	ifstream ListaRead("listaspesa.csv");
+    ofstream MagazzinoWrite("magazzinoTemp.csv", ios::app);
 	ofstream ListaWrite("listaspesaTemp.csv", ios::app);
-   
+    
 	/*std::getline(MagazzinoRead, m);
     // Il ciclo while scorre il file magazzino.csv riga per riga e verifica se ci sono gli ingredienti presenti nella lista della spesa  
     while(!m.empty()) 
@@ -188,7 +191,7 @@ void ControlloIngredientiPresenti()
         quantitaLista = stoi(s.substr(s.find(":") + 1, s.length())); // estrai quantita
 
         ifstream MagazzinoRead("magazzino.csv");
-        ofstream MagazzinoWrite("magazzinoTemp.csv", ios::app);
+        
         std::getline(MagazzinoRead, m);
         trovato = false;
         while (!m.empty()) 
@@ -204,6 +207,7 @@ void ControlloIngredientiPresenti()
                     quantitaMagazzino = 0;
                     quantitaLista = quantitaLista - quantitaMagazzino;
                     //scivo nella lista
+                    ListaWrite << nomeLista << ":" << quantitaLista << endl;
                 }
                 else 
                 {
@@ -211,8 +215,13 @@ void ControlloIngredientiPresenti()
                     //non scrivo nella lista
                 }
             }
-             //scrivo nel magazzino
+            //scrivo nel magazzino
+            MagazzinoWrite << nomeMagazzino << ":" << quantitaMagazzino << endl;
             //sovrascrivo magazzino
+            std::remove("magazzino.csv");
+            std::rename("magazzinoTemp.csv", "magazzino.csv");
+            std::remove("magazzinoTemp.csv");
+
 
             std::getline(MagazzinoRead, m);
 
@@ -223,16 +232,22 @@ void ControlloIngredientiPresenti()
             nomeMagazzino = nomeLista;
             quantitaMagazzino = 0;
             //scrivo nel magazzino
+            MagazzinoWrite << nomeMagazzino << ":" << quantitaMagazzino << endl;
             //riscrivo nella lista
+            ListaWrite << nomeLista << ":" << quantitaLista << endl;
         }
 
         //sovrascrivo lista
+        std::remove("listaspesa.csv");
+        std::rename("listaspesaTemp.csv", "listaspesa.csv");
+        std::remove("listaspesaTemp.csv");
         MagazzinoRead.close();
-        MagazzinoWrite.close();
+
+        std::getline(ListaRead, s);
     }
 	ListaRead.close();
 	ListaWrite.close();
-    
+    MagazzinoWrite.close();
 }
 
 
@@ -318,6 +333,6 @@ int main()
     ControlloIngredientiPresenti();
     std::remove("listaspesaVecchia.csv");
     std::rename("listaspesa.csv", "listaspesaVecchia.csv");
-    std::remove("magazzinoTemp.csv");
+    //std::remove("magazzinoTemp.csv");
 }
 
